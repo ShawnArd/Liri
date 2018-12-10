@@ -1,3 +1,4 @@
+//made with the assistance of Shayne Officer
 require("dotenv").config();
 var inquirer = require("inquirer")
 
@@ -18,7 +19,7 @@ for(let i=3; i < process.argv.length; i++) {
 userInput +=process.argv[i]+"+";
 }
 //this cuts the end + off
-userInput = userInput.trim();
+userInput = userInput.slice(0,-1);
 
 switch(userChoice) {
     case "concert-this":
@@ -37,6 +38,24 @@ switch(userChoice) {
 }
 
 function concert(choice) {
+    console.log("concerts")
+    axios.get("https://rest.bandsintown.com/artists/"+choice+"/events?app_id="+keys.bands.id).then(
+    
+        function(response, err) {
+            var concerts = response.data;
+            // console.log(concerts)
+            var list = "";
+            for (var i = 0; i < concerts.length - 1; i++) {
+                //uses the moments to format date
+                var date = moment(concerts[i].datetime).format("MM/DD/YYYY");
+                //creates a string and seperates them
+                list += concerts[i].venue.name +", "+ concerts[i].venue.city+", "+ date+ "\n"
+            }
+            console.log(list);
+
+
+        })
+
 
 }
 
@@ -69,7 +88,7 @@ function movie(choice) {
     if (!choice) {
         choice ="Mr Nobody"
     }
-        axios.get("http://www.omdbapi.com/?t="+choice+"&y=&plot=short&apikey=40e9cece").then(
+        axios.get("http://www.omdbapi.com/?t="+choice+"&y=&plot=short&apikey="+keys.omdb.id).then(
     
     function(response, err) {
         //collects response data
