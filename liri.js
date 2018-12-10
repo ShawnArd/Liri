@@ -7,9 +7,9 @@ var moment = require('moment')
 
 var keys = require("./keys")
 
-var omdb = new Omdb(keys.omdb)
+
 var spotify = new Spotify(keys.spotify)
-var bands = new Bands(keys.bands)
+
 
 var userChoice = process.argv[2]
 
@@ -17,6 +17,7 @@ var userInput = ""
 for(let i=3; i < process.argv.length; i++) {
 userInput +=process.argv[i]+"+";
 }
+//this cuts the end + off
 userInput = userInput.trim();
 
 switch(userChoice) {
@@ -64,5 +65,28 @@ function songs(choice) {
 
 
 function movie(choice) {
+    //sets default Choice
+    if (!choice) {
+        choice ="Mr Nobody"
+    }
+    console.log(choice)
+    axios.get("http://www.omdbapi.com/?t="+choice+"&y=&plot=short&apikey=40e9cece").then(
+    
+    function(response, err) {
+
+
+    if (!err) {
+        // console.log(response)
+
+        console.log("Title: " + response.Title);
+        console.log("Release Year: " + response.Year);
+        console.log("IMDB Rating: " + response.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + response.Ratings);
+        console.log("Country: " + response.Country);
+        console.log("Language: " + response.Language);
+        console.log("Plot: " + response.Plot);
+        console.log("Actors: " + response.Actors);
+    }
+});
 
 }
