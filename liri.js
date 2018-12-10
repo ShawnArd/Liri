@@ -69,24 +69,45 @@ function movie(choice) {
     if (!choice) {
         choice ="Mr Nobody"
     }
-    console.log(choice)
-    axios.get("http://www.omdbapi.com/?t="+choice+"&y=&plot=short&apikey=40e9cece").then(
+        axios.get("http://www.omdbapi.com/?t="+choice+"&y=&plot=short&apikey=40e9cece").then(
     
     function(response, err) {
+        //collects response data
+        var movie = response.data
 
-
+        //if no error console reponse
     if (!err) {
         // console.log(response)
 
-        console.log("Title: " + response.Title);
-        console.log("Release Year: " + response.Year);
-        console.log("IMDB Rating: " + response.imdbRating);
-        console.log("Rotten Tomatoes Rating: " + response.Ratings);
-        console.log("Country: " + response.Country);
-        console.log("Language: " + response.Language);
-        console.log("Plot: " + response.Plot);
-        console.log("Actors: " + response.Actors);
+        console.log("Title: " + movie.Title);
+        console.log("Release Year: " + movie.Year);
+        console.log("IMDB Rating: " + movie.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + movie.Ratings);
+        console.log("Country: " + movie.Country);
+        console.log("Language: " + movie.Language);
+        console.log("Plot: " + movie.Plot);
+        console.log("Actors: " + movie.Actors);
     }
 });
 
 }
+
+// function doWhatItSays() {
+// 	fs.readFile('random.txt', "utf8", function(error, data){
+
+// 		if (error) {
+//     		return console.log(error);
+//   		}
+
+// 		// Then split it by commas (to make it more readable)
+// 		var dataArr = data.split(",");
+
+// 		// Each command is represented. Because of the format in the txt file, remove the quotes to run these commands. 
+// 		if (dataArr[0] === "spotify-this-song") {
+// 			var songcheck = dataArr[1].slice(1, -1);
+// 			spotify(songcheck);
+		
+		
+//   	});
+
+// };
