@@ -32,13 +32,13 @@ switch(userChoice) {
         movie(userInput)
         break;
     case "do-what-it-says":
-        console.log("whatevs")
+        doWhatItSays()
         break;
     default: break;
 }
 
 function concert(choice) {
-    console.log("concerts")
+    console.log(choice)
     axios.get("https://rest.bandsintown.com/artists/"+choice+"/events?app_id="+keys.bands.id).then(
     
         function(response, err) {
@@ -111,22 +111,19 @@ function movie(choice) {
 
 }
 
-// function doWhatItSays() {
-// 	fs.readFile('random.txt', "utf8", function(error, data){
+function doWhatItSays() {
 
-// 		if (error) {
-//     		return console.log(error);
-//   		}
-
-// 		// Then split it by commas (to make it more readable)
-// 		var dataArr = data.split(",");
-
-// 		// Each command is represented. Because of the format in the txt file, remove the quotes to run these commands. 
-// 		if (dataArr[0] === "spotify-this-song") {
-// 			var songcheck = dataArr[1].slice(1, -1);
-// 			spotify(songcheck);
-		
-		
-//   	});
-
-// };
+        fs.readFile("./random.txt", "utf8", (err, data) => {
+            spotify.search({
+                type: "track",
+                query: data
+            }).then((response) => {
+                
+                var song = response.tracks.items;
+                console.log("Artist: " + song[0].artists[0].name);
+                console.log("Song: " + song[0].name);
+                console.log("Preview: " + song[0].preview_url);
+                console.log("Album: " + song[0].album.name);
+        })
+    })
+}
